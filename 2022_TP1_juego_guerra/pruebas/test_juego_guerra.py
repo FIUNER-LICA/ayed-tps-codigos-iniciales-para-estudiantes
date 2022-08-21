@@ -1,0 +1,83 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Aug 21 11:23:53 2022
+
+@author: je_su
+"""
+
+
+from modulos.juego_guerra import JuegoGuerra
+import unittest
+
+
+class TestJuegoGuerra(unittest.TestCase):
+    
+    
+    def setUp(self):
+        
+        '''jugador 1 gana la partida en el turno 28'''
+        self.juego_1 = JuegoGuerra(random_seed= 547)
+        '''jugador 1 gana la partida en el turno 432'''
+        self.juego_2 = JuegoGuerra(random_seed=314)
+        '''jugador 1 gana la partida en el turno 1754'''
+        self.juego_3 = JuegoGuerra(random_seed=59)
+                
+        '''jugador 2 gana la partida en el turno 220'''
+        self.juego_4 = JuegoGuerra(random_seed=10)                
+        '''jugador 2 gana la partida en el turno 1290'''
+        self.juego_5 = JuegoGuerra(random_seed=408)
+        '''jugador 2 gana la partida en el turno 3149 por Guerra'''
+        self.juego_6 = JuegoGuerra(random_seed=572)
+        
+        '''juego empate'''
+        self.juego_7 = JuegoGuerra(random_seed=18)        
+        self.juego_8 = JuegoGuerra(random_seed=404)
+    
+    def test_resulta_gana_jugador1(self):
+        """compruebo el número de turnos de 3 partidas con
+        el jugador 1 como ganador
+        """
+        self.juego_1.iniciar_juego()
+        self.juego_2.iniciar_juego()
+        self.juego_3.iniciar_juego()
+        
+        self.assertEqual(self.juego_1.turnos_jugados, 28)
+        self.assertEqual(self.juego_1.ganador, 'jugador 1')
+        
+        self.assertEqual(self.juego_2.turnos_jugados, 432)
+        self.assertEqual(self.juego_2.ganador, 'jugador 1')
+        
+        self.assertEqual(self.juego_3.turnos_jugados, 1754)
+        self.assertEqual(self.juego_3.ganador, 'jugador 1')
+        
+    
+    def test_resulta_gana_jugador2(self):
+        """compruebo el número de turnos de 3 partidas con
+        el jugador 2 como ganador
+        """        
+        self.juego_4.iniciar_juego()
+        self.juego_5.iniciar_juego()
+        self.juego_6.iniciar_juego()
+        
+        self.assertEqual(self.juego_4.turnos_jugados, 220)
+        self.assertEqual(self.juego_4.ganador, 'jugador 2')
+        
+        self.assertEqual(self.juego_5.turnos_jugados, 1290)
+        self.assertEqual(self.juego_5.ganador, 'jugador 2')
+        
+        self.assertEqual(self.juego_6.turnos_jugados, 3149)
+        self.assertEqual(self.juego_6.ganador, 'jugador 2')
+    
+    def test_resulta_empate(self):
+        """compruebo el resultado de 2 partidas con empate"""
+        self.juego_7.iniciar_juego()
+        self.juego_8.iniciar_juego()
+        
+        self.assertTrue(self.juego_7.empate)
+        self.assertTrue(self.juego_8.empate)
+    
+    
+if __name__=='__main__':
+    
+    unittest.main()
+    
