@@ -246,32 +246,32 @@ class Test_LDE(unittest.TestCase):
         self.assertEqual(dato_original, nodo_actual.dato)
        
     
-    # def test_invertir(self):
+    def test_invertir(self):
         
-    #     """
-    #     Creo una LDE con elementos aleatorios, realizo una copia de la misma,
-    #     e invierto la original.
-    #     Recorro las listas, una desde el inicio y la otra desde el final y 
-    #     verifico que el contenido de los nodos sea el mismo.
+        """
+        Creo una LDE con elementos aleatorios, realizo una copia de la misma,
+        e invierto la original.
+        Recorro las listas, una desde el inicio y la otra desde el final y 
+        verifico que el contenido de los nodos sea el mismo.
         
-    #     """
+        """
 
-    #     for _ in range(0, self.n_elementos):
-    #         item = random.randint(-self.n_elementos, self.n_elementos)
-    #         self.lde_1.agregar(item)
+        for _ in range(0, self.n_elementos):
+            item = random.randint(-self.n_elementos, self.n_elementos)
+            self.lde_1.agregar(item)
         
-    #     lista_copia = self.lde_1.copiar()
-    #     self.lde_1.invertir()        
+        lista_copia = self.lde_1.copiar()
+        self.lde_1.invertir()        
    
-    #     nodo_inicio = lista_copia.cabeza
-    #     nodo_fin = self.lde_1.cola 
+        nodo_inicio = lista_copia.cabeza
+        nodo_fin = self.lde_1.cola 
         
-    #     for _ in range(self.n_elementos):
+        for _ in range(self.n_elementos):
             
-    #         self.assertEqual(nodo_inicio.dato, nodo_fin.dato)
+            self.assertEqual(nodo_inicio.dato, nodo_fin.dato)
             
-    #         nodo_inicio = nodo_inicio.siguiente
-    #         nodo_fin = nodo_fin.anterior       
+            nodo_inicio = nodo_inicio.siguiente
+            nodo_fin = nodo_fin.anterior       
             
     
     def test_ordenar(self):
