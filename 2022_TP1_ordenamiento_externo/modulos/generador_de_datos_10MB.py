@@ -31,5 +31,4 @@ def crear_archivo_de_datos(nombre):
         with open(nombre, 'a+') as archivo:
             archivo.writelines(bloque)
             
-    
 crear_archivo_de_datos('datos.txt')
