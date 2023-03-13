@@ -3,7 +3,7 @@
 from random import randint
 
 def crear_archivo_de_datos(nombre):
-    f = 10**6
+    f = 10**5
     N = 5*f
     cifras = 20
     tam_bloque = f # 1 M de valores por bloque a escribir
