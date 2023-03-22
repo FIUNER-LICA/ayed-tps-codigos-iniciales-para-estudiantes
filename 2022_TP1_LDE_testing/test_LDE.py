@@ -22,15 +22,15 @@ class Test_LDE(unittest.TestCase):
         self.lde_2 = ListaDobleEnlazada()
         self.lista_aux_2 = random.choices(range(-self.n_elementos//2, self.n_elementos//2), k=self.n_elementos)
         for item in self.lista_aux_2:
-            self.lde_2.anexar(item)
+            self.lde_2.agregar_al_final(item)
             
         """LDE de elementos no repetidos con lista auxiliar"""
         self.lde_3 = ListaDobleEnlazada()
         self.lista_aux_3 = random.sample(range(-self.n_elementos, self.n_elementos), self.n_elementos)
         for item in self.lista_aux_3:
-            self.lde_3.anexar(item)
+            self.lde_3.agregar_al_final(item)
         
-        """ """
+       
         self.posicion = random.randint(1, self.n_elementos-1) #randint incluye el extremo
         
     
@@ -45,7 +45,7 @@ class Test_LDE(unittest.TestCase):
             self.assertEqual(nodo.dato, None)
             
     
-    def test_agregar(self):
+    def test_agregar_al_inicio(self):
         """
         pruebo que al agregar elementos al inicio de la lista
         la misma tiene tamaño correcto y se llena correctamente      
@@ -53,15 +53,15 @@ class Test_LDE(unittest.TestCase):
         lista_aux = []
         for _ in range(self.n_elementos):
             item = random.randint(-self.n_elementos//2, self.n_elementos//2)
-            lista_aux.insert(0,item)
-            self.lde_1.agregar(item)
+            lista_aux.insert(item,0)
+            self.lde_1.agregar_al_inicio(item)
         
         self.assertEqual(self.lde_1.tamanio, self.n_elementos)
         
         for ind,elem in enumerate(self.lde_1):
             self.assertEqual(elem.dato, lista_aux[ind])
     
-    def test_anexar(self):
+    def test_agregar_al_final(self):
         """
         pruebo que al anexar elementos al final de la lista
         la misma tiene tamaño correcto y se llena correctamente
@@ -70,7 +70,7 @@ class Test_LDE(unittest.TestCase):
         for _ in range(self.n_elementos):
             item = random.randint(-self.n_elementos//2, self.n_elementos//2)
             lista_aux.append(item)
-            self.lde_1.anexar(item)
+            self.lde_1.agregar_al_final(item)
             
         self.assertEqual(self.lde_1.tamanio, self.n_elementos)
         
@@ -84,13 +84,13 @@ class Test_LDE(unittest.TestCase):
         """
 
         """inserto 1er item al inicio"""
-        self.lde_2.insertar(0, 120)
+        self.lde_2.insertar(120, 0)
         self.n_elementos += 1
         self.assertEqual(self.lde_2.tamanio, self.n_elementos)
         self.assertEqual(self.lde_2.cabeza.dato, 120)
         
         """inserto 2do item en la última posición"""
-        self.lde_2.insertar(self.lde_2.tamanio-1, 180)
+        self.lde_2.insertar(180, self.lde_2.tamanio-1)
         self.n_elementos += 1
         self.assertEqual(self.lde_2.tamanio, self.n_elementos)
         nodo_anterior = None
@@ -109,7 +109,7 @@ class Test_LDE(unittest.TestCase):
         """        
         print(f"\nPosición aleatoria donde se inserta: {self.posicion}")
         
-        self.lde_2.insertar(self.posicion, 250)
+        self.lde_2.insertar(250, self.posicion)
         self.n_elementos += 1
         self.assertEqual(self.lde_2.tamanio, self.n_elementos)
         
@@ -127,9 +127,9 @@ class Test_LDE(unittest.TestCase):
         intento insertar en posiciones incorrectas o no existentes de
         la LDE y compruebo que se lanzan las excepciones correspondientes
         """               
-        self.assertRaises(Exception, self.lde_2.insertar, -10, 210)
-        self.assertRaises(Exception, self.lde_2.insertar, -(self.n_elementos + 10), 234)
-        self.assertRaises(Exception, self.lde_2.insertar, self.n_elementos + 10, 220)
+        self.assertRaises(Exception, self.lde_2.insertar, 210, -10)
+        self.assertRaises(Exception, self.lde_2.insertar, 234, -(self.n_elementos + 10))
+        self.assertRaises(Exception, self.lde_2.insertar, 220, self.n_elementos + 10)
 
 
     def test_extraer_extremos(self):
@@ -258,7 +258,7 @@ class Test_LDE(unittest.TestCase):
 
         for _ in range(0, self.n_elementos):
             item = random.randint(-self.n_elementos, self.n_elementos)
-            self.lde_1.agregar(item)
+            self.lde_1.agregar_al_inicio(item)
         
         lista_copia = self.lde_1.copiar()
         self.lde_1.invertir()        
@@ -305,6 +305,11 @@ class Test_LDE(unittest.TestCase):
             self.assertEqual(lista_concatenada1[i], nodo.dato)
             
         self.assertEqual(len(lista_concatenada1), lista_concatenada2.tamanio)
+        
+    def test_operador_add(self):
+        
+        lista_concatenada1 = self.lista_aux_3 + self.lista_aux_2
+        
                         
     
 if __name__ == "__main__":
