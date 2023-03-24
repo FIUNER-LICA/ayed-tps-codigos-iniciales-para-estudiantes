@@ -196,57 +196,46 @@ class Test_LDE(unittest.TestCase):
         correspondiente en la LSE
         """
         self.assertEqual(str(self.lista_aux_3), str(self.lde_3))
-    
-            
-    def auxiliar_copiar(self, lista_original, lista_copia):
+
+    def test_operador_len(self):
         """
-        función auxiliar para el test del método copiar
+        Prueba que este sobrecargado el operador len() para la LDE
         """
-        nodo_original = lista_original.cabeza
-        nodo_copia = lista_copia.cabeza
-        
-        self.assertEqual(lista_original.tamanio, lista_copia.tamanio)
-        
-        while nodo_original or nodo_copia: #termina si ambos son None
-            self.assertEqual(nodo_original.dato, nodo_copia.dato)
-            nodo_original = nodo_original.siguiente
-            nodo_copia = nodo_copia.siguiente
-        
-    
+        self.assertEqual(len(self.lde_1), 0, "No funciona el operador len() en la LDE")
+        self.assertEqual(len(self.lde_2), self.n_elementos, "No funciona el operador len() en la LDE")
+
     def test_copiar(self):
         """
         hago una copia de una LDE con elementos y sin elementos
         y comparo nodo a nodo para verificar la copia.
-        compruebo que se hace la copia del contenido de cada nodo
-        remuevo un nodo de la copia en una posición aleatoria, modifico
-        el contenido del nodo y verifico que el contenido del nodo en la 
-        misma posición en la lista original no se modificó.        
         """
         lde_3_copia = self.lde_3.copiar()
-        self.auxiliar_copiar(self.lde_3, lde_3_copia)
-        
-        lde_1_copia = self.lde_1.copiar()
-        self.auxiliar_copiar(self.lde_1, lde_1_copia)
-    
-        self.posicion = 5
-        #extraigo de la copia un nodo         
-        nodo_extraido = lde_3_copia.extraer(self.posicion)        
-        dato_original = nodo_extraido.dato
-       
-        #modifico el nodo extraído
-        nodo_extraido.dato =  3*self.n_elementos #valor fuera del rango
-  
-        #compruebo que el contenido en la lista original
-        #en la posición del nodo extraído no se modifica
-        contador = 0
-        nodo_actual = self.lde_3.cabeza        
-        for _ in range(self.posicion):
-            nodo_actual = nodo_actual.siguiente 
-            contador += 1             
-            
-        self.assertEqual(dato_original, nodo_actual.dato)
-       
-    
+
+        # Compruebo la integridad fisica de la lista original
+        self.recorrer_lista(self.lde_3)
+        # Compruebo que la lista copiada este correctamente enlazada
+        self.recorrer_lista(lde_3_copia)
+
+        nodo_original = self.lde_3.copiar.cabeza
+        nodo_copia = lde_3_copia.cabeza
+
+        # Compruebo longitud de las listas
+        self.assertEqual(len(self.lde_3.copiar), len(lde_3_copia),
+                         "Los tamaños de las listas copiadas nos son las mismas.")
+        # Compruebo que las listas sean instancias diferentes
+        self.assertIsNot(self.lde_3.copiar, lde_3_copia,
+                         "Las listas copiadas son referencias al mismo espacio de memoria.")
+
+        while nodo_original or nodo_copia:
+            # Compruebo igualdad del contenido de ambas listas
+            self.assertEqual(nodo_original.dato, nodo_copia.dato,
+                             "Los datos de la lista copiada no son iguales a los de la lista original")
+            # Compruebo que los nodos de ambas listas sean instancias diferentes
+            self.assertIsNot(nodo_original, nodo_copia,
+                             "Los nodos de las lista copiada son compartidos con los de la lista original")
+            nodo_original = nodo_original.siguiente
+            nodo_copia = nodo_copia.siguiente
+
     def test_invertir(self):
         
         """
@@ -262,18 +251,21 @@ class Test_LDE(unittest.TestCase):
             self.lde_1.agregar_al_inicio(item)
         
         lista_copia = self.lde_1.copiar()
-        self.lde_1.invertir()        
+        self.lde_1.invertir()
+
+        # Verifico que sus elementos esten correctamente enlazados
+        self.recorrer_lista(self.lde_1)
    
-        nodo_inicio = lista_copia.cabeza
-        nodo_fin = self.lde_1.cola 
-        
+        nodo_invertido = lista_copia.cabeza
+        nodo_original = self.lde_1.cola
+
         for _ in range(self.n_elementos):
             
-            self.assertEqual(nodo_inicio.dato, nodo_fin.dato)
-            
-            nodo_inicio = nodo_inicio.siguiente
-            nodo_fin = nodo_fin.anterior       
-            
+            self.assertEqual(nodo_invertido.dato, nodo_original.dato)
+            # Avanzo al siguiente nodo de lista invertida
+            nodo_invertido = nodo_invertido.siguiente
+            # Avanzo al siguiente nodo de lista original
+            nodo_original = nodo_original.anterior
     
     def test_ordenar(self):
         """
@@ -300,6 +292,10 @@ class Test_LDE(unittest.TestCase):
         nodo = lista.cabeza
         counter = 0
         elementos = []
+
+        self.assertIsNone(nodo.anterior,
+                          "El elemento anterior a la cabeza de la lista debe ser None")
+
         while nodo is not None:
             counter += 1
             elementos.append(nodo.dato)
@@ -309,6 +305,10 @@ class Test_LDE(unittest.TestCase):
 
         # Recorro de atras para adelante
         nodo = lista.cola
+
+        self.assertIsNone(nodo.siguiente,
+                          "El elemento siguiente a la cola de la lista debe ser None")
+
         while nodo is not None:
             counter -= 1
             nodo = nodo.anterior
