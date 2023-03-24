@@ -320,10 +320,10 @@ class Test_LDE(unittest.TestCase):
     def test_metodo_concatenar(self):
         """
         Verifico que funcione bien la concatenacion de listas mediante el metodo
-        concatenar.
-        """        
-        # lista_concatenada1 = self.lista_aux_3 + self.lista_aux_2
-        lista_concatenada1 = self.lde_3.concatenar(self.lde_2)
+        concatenar. El metodo modifica la instancia que realiza la invocacion.
+        """
+        lista_concatenada1 = self.lde_3.copiar()
+        lista_concatenada1.concatenar(self.lde_2)
 
         # Compruebo que las listas originales esten intactas
         self.recorrer_lista(self.lde_3)
@@ -352,6 +352,9 @@ class Test_LDE(unittest.TestCase):
         """
         Verifico que funcione la concatenacion de listas mediante
         el uso del operador +
+        Este operador devuelve una LDE que reuslta de la concatenación de las
+        dos LDE que recibe como operandos. Internamente no modifica ninguno
+        de sus dos operandos.
         """
         # lista_concatenada1 = self.lista_aux_3 + self.lista_aux_2
         lista_concatenada1 = self.lde_3 + self.lde_2
