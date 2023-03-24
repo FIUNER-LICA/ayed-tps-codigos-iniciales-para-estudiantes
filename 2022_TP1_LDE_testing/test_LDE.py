@@ -29,8 +29,7 @@ class Test_LDE(unittest.TestCase):
         self.lista_aux_3 = random.sample(range(-self.n_elementos, self.n_elementos), self.n_elementos)
         for item in self.lista_aux_3:
             self.lde_3.agregar_al_final(item)
-        
-       
+
         self.posicion = random.randint(1, self.n_elementos-1) #randint incluye el extremo
         
     def test_iteracion(self):
@@ -43,7 +42,8 @@ class Test_LDE(unittest.TestCase):
         nodo = self.lde_2.cabeza
         for dato in self.lde_2:
             self.assertEqual(nodo.dato, dato,
-                             "La lista no arroja los datos de sus nodos correctamente al ser iterado en un for")
+                             "Los datos arrojados en el for no coinciden con los datos "
+                             "obtenidos por recorrido manual de la LDE desde la cabeza")
             nodo = nodo.siguiente
     
     def test_agregar_al_inicio(self):
@@ -67,16 +67,39 @@ class Test_LDE(unittest.TestCase):
         pruebo que al anexar elementos al final de la lista
         la misma tiene tamaño correcto y se llena correctamente
         """
-        lista_aux = []
-        for _ in range(self.n_elementos):
-            item = random.randint(-self.n_elementos//2, self.n_elementos//2)
-            lista_aux.append(item)
-            self.lde_1.agregar_al_final(item)
-            
-        self.assertEqual(self.lde_1.tamanio, self.n_elementos)
-        
-        for ind, dato in enumerate(self.lde_1):
-            self.assertEqual(dato, lista_aux[ind])
+
+        valorNuevo = 25
+
+        # Anexar en lista no vacia
+        lde2_copia = self.lde_2.copiar()
+        lde2_copia.agregar_al_final(valorNuevo)
+
+        self.recorrer_lista(lde2_copia)
+        self.assertEqual(len(self.lde_2), len(lde2_copia)-1,
+                         "El tamaño de la lista luego de anexar debe incrementarse en uno")
+
+        nodo_original = self.lde_2.cabeza
+        nodo_copia = lde2_copia.cabeza
+        while nodo_original.siguiente is not None:
+            self.assertEqual(nodo_original.dato, nodo_copia.dato,
+                             "Se modificaron los datos de la lista luego de anexar el nuevo elemento")
+            nodo_original = nodo_original.siguiente
+            nodo_copia = nodo_copia.siguiente
+
+        nodo_copia = nodo_copia.siguiente
+        self.assertEqual(nodo_copia.dato, valorNuevo,
+                         "El ultimo nodo no contiene el valor que se solicito agregar")
+
+        # Anexar en lista vacia (self.lde_1)
+        lde1_copia = self.lde_1.copiar()
+        lde1_copia.agregar_al_final(valorNuevo)
+
+        self.recorrer_lista(lde1_copia)
+        self.assertEqual(len(lde1_copia), 1,
+                         "Al anexar un elemento en una lista vacia, su nuevo tamaño debe ser uno")
+
+        self.assertEqual(self.lde_1.cabeza.dato, valorNuevo,
+                         "El nodo anezado a la lista vacia no contiene el valor que se solicito agregar")
             
     def test_insertar_extremos(self):
         """
