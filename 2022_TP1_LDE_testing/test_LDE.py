@@ -33,17 +33,18 @@ class Test_LDE(unittest.TestCase):
        
         self.posicion = random.randint(1, self.n_elementos-1) #randint incluye el extremo
         
-    
-    def test_recorrer_vacio(self):
+    def test_iteracion(self):
         """
-        pruebo el recorrido de la LDE sin elementos, verifico
-        que retorne None
+        Verificamos que tenga sobrecargado los métodos necesarios para ser
+        iterado en un bucle for.
+        En cada iteración debe devolver el dato siguiente, no el nodo.
         """
-        
-        """lista vacía"""
-        for nodo in self.lde_1:
-            self.assertEqual(nodo.dato, None)
-            
+
+        nodo = self.lde_2.cabeza
+        for dato in self.lde_2:
+            self.assertEqual(nodo.dato, dato,
+                             "La lista no arroja los datos de sus nodos correctamente al ser iterado en un for")
+            nodo = nodo.siguiente
     
     def test_agregar_al_inicio(self):
         """
@@ -53,13 +54,13 @@ class Test_LDE(unittest.TestCase):
         lista_aux = []
         for _ in range(self.n_elementos):
             item = random.randint(-self.n_elementos//2, self.n_elementos//2)
-            lista_aux.insert(item,0)
+            lista_aux.insert(item, 0)
             self.lde_1.agregar_al_inicio(item)
         
         self.assertEqual(self.lde_1.tamanio, self.n_elementos)
         
-        for ind,elem in enumerate(self.lde_1):
-            self.assertEqual(elem.dato, lista_aux[ind])
+        for ind, dato in enumerate(self.lde_1):
+            self.assertEqual(dato, lista_aux[ind])
     
     def test_agregar_al_final(self):
         """
@@ -74,8 +75,8 @@ class Test_LDE(unittest.TestCase):
             
         self.assertEqual(self.lde_1.tamanio, self.n_elementos)
         
-        for ind,elem in enumerate(self.lde_1):
-            self.assertEqual(elem.dato, lista_aux[ind])
+        for ind, dato in enumerate(self.lde_1):
+            self.assertEqual(dato, lista_aux[ind])
             
     def test_insertar_extremos(self):
         """
