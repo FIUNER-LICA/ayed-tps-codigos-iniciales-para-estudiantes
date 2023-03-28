@@ -73,7 +73,7 @@ class Test_LDE(unittest.TestCase):
             nodo_original = nodo_original.siguiente
             nodo_copia = nodo_copia.siguiente
 
-        # Anexar en lista vacia (self.lde_1)
+        # Agregar en lista vacia (self.lde_1)
         lde1_copia = self.lde_1.copiar()
         lde1_copia.agregar_al_inicio(valorNuevo)
 
@@ -135,39 +135,78 @@ class Test_LDE(unittest.TestCase):
         tamaño correcto y su valor.
         """
 
-        """inserto 1er item al inicio"""
-        self.lde_2.insertar(120, 0)
-        self.n_elementos += 1
-        self.assertEqual(self.lde_2.tamanio, self.n_elementos)
-        self.assertEqual(self.lde_2.cabeza.dato, 120)
-        
-        """inserto 2do item en la última posición"""
-        self.lde_2.insertar(180, self.lde_2.tamanio-1)
-        self.n_elementos += 1
-        self.assertEqual(self.lde_2.tamanio, self.n_elementos)
-        nodo_anterior = None
-        nodo_actual = self.lde_2.cabeza
-        while nodo_actual.siguiente:
-            nodo_anterior = nodo_actual
-            nodo_actual = nodo_actual.siguiente
-            valor = nodo_anterior.dato            
-        self.assertEqual(valor, 180)
-        
+        valorNuevo = 25
+
+        # Insertar al inicio de lista no vacia (lde_2)
+        lde2_copia = self.lde_2.copiar()
+        lde2_copia.insertar(valorNuevo, 0)
+
+        self.recorrer_lista(lde2_copia)
+        self.assertEqual(len(self.lde_2), len(lde2_copia) - 1,
+                         "El tamaño de la lista luego de insertar debe incrementarse en uno")
+
+        nodo_copia = lde2_copia.cabeza
+        self.assertEqual(nodo_copia.dato, valorNuevo,
+                         "El primer nodo no contiene el valor que se solicito insertar")
+
+        nodo_copia = nodo_copia.siguiente
+        nodo_original = self.lde_2.cabeza
+        while nodo_original.siguiente is not None:
+            self.assertEqual(nodo_original.dato, nodo_copia.dato,
+                             "Se modificaron los datos de la lista luego de insertar el nuevo elemento")
+            nodo_original = nodo_original.siguiente
+            nodo_copia = nodo_copia.siguiente
+
+        # Insertar al final de lista no vacia (lde_3)
+        lde3_copia = self.lde_3.copiar()
+        lde3_copia.insertar(valorNuevo, len(lde3_copia))
+
+        self.recorrer_lista(lde3_copia)
+        self.assertEqual(len(self.lde_3), len(lde3_copia) - 1,
+                         "El tamaño de la lista luego de insertar debe incrementarse en uno")
+
+        nodo_original = self.lde_3.cabeza
+        nodo_copia = lde3_copia.cabeza
+        while nodo_original.siguiente is not None:
+            self.assertEqual(nodo_original.dato, nodo_copia.dato,
+                             "Se modificaron los datos de la lista luego de insertar el nuevo elemento")
+            nodo_original = nodo_original.siguiente
+            nodo_copia = nodo_copia.siguiente
+
+        nodo_copia = nodo_copia.siguiente
+        self.assertEqual(nodo_copia.dato, valorNuevo,
+                         "El ultimo nodo no contiene el valor que se solicito insertar")
+        self.assertIs(nodo_copia, lde3_copia.cola,
+                      "El ultimo nodo no coincide con la refencia a la cola de la lista")
+
+        # Insertar en lista vacia (self.lde_1)
+        lde1_copia = self.lde_1.copiar()
+        lde1_copia.insertar(valorNuevo, 0)
+
+        self.recorrer_lista(lde1_copia)
+        self.assertEqual(len(lde1_copia), 1,
+                         "Al insertado un elemento al inicio de una lista vacia, su nuevo tamaño debe ser uno")
+
+        self.assertEqual(self.lde_1.cabeza.dato, valorNuevo,
+                         "El nodo insertado a la lista vacia no contiene el valor que se solicito insertar")
+        self.assertIs(lde1_copia.cabeza, lde1_copia.cola,
+                      "En una lista de un elemento, la cabeza es la misma que la cola")
     
     def test_insertar_interior(self):
         """
         pruebo insertar un ítem en una posición aleatoria
         de la LDE y compruebo que el elemento es insertado
-        """        
-        print(f"\nPosición aleatoria donde se inserta: {self.posicion}")
+        """
+        posicion = random.randint(1, self.n_elementos - 1)  # randint incluye el extremo
+        # print(f"\nPosición aleatoria donde se inserta: {posicion}")
         
-        self.lde_2.insertar(250, self.posicion)
-        self.n_elementos += 1
-        self.assertEqual(self.lde_2.tamanio, self.n_elementos)
+        self.lde_2.insertar(250, posicion)
+        self.assertEqual(len(self.lde_2), self.n_elementos + 1)
         
         contador = 0
         nodo_actual = self.lde_2.cabeza
-        while nodo_actual and contador != self.posicion:            
+        valor = None
+        while nodo_actual and contador != posicion:
             contador += 1
             nodo_actual = nodo_actual.siguiente 
             valor = nodo_actual.dato 
@@ -182,7 +221,6 @@ class Test_LDE(unittest.TestCase):
         self.assertRaises(Exception, self.lde_2.insertar, 210, -10)
         self.assertRaises(Exception, self.lde_2.insertar, 234, -(self.n_elementos + 10))
         self.assertRaises(Exception, self.lde_2.insertar, 220, self.n_elementos + 10)
-
 
     def test_extraer_extremos(self):
         """
@@ -362,10 +400,10 @@ class Test_LDE(unittest.TestCase):
 
         while nodo is not None:
             counter -= 1
-            nodo = nodo.anterior
             self.assertEqual(elementos[counter], nodo.dato,
                              "Los elementos en la lista recorrida de atras para adelante son diferentes "
                              "a que si la recorremos de adelante para atrás.")
+            nodo = nodo.anterior
 
 
     def test_metodo_concatenar(self):
