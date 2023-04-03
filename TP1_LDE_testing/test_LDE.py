@@ -306,7 +306,7 @@ class Test_LDE(unittest.TestCase):
         self.assertEqual(len(lde_3_copia), len(self.lde_3),
                          "Los tamaños de las listas copiadas nos son las mismas.")
         # Compruebo que las listas sean instancias diferentes
-        self.assertIsNot(lde_3_copia, self.lde_3.copiar,
+        self.assertIsNot(lde_3_copia, self.lde_3,
                          "Las listas copiadas son referencias al mismo espacio de memoria.")
 
         while nodo_original or nodo_copia:
