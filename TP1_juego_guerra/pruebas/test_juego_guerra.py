@@ -12,31 +12,19 @@ import unittest
 
 class TestJuegoGuerra(unittest.TestCase):
     
-    
-    def setUp(self):
-        
-        '''jugador 1 gana la partida en el turno 137'''
-        self.juego_1 = JuegoGuerra(random_seed= 314)
-        '''jugador 1 gana la partida en el turno 638'''
-        self.juego_2 = JuegoGuerra(random_seed=59)
-        '''jugador 1 gana la partida en el turno 1383'''
-        self.juego_3 = JuegoGuerra(random_seed=883)
-                
-        '''jugador 2 gana la partida en el turno 145'''
-        self.juego_4 = JuegoGuerra(random_seed=167)                
-        '''jugador 2 gana la partida en el turno 1112'''
-        self.juego_5 = JuegoGuerra(random_seed=190)
-        '''jugador 2 gana la partida en el turno 1373 por Guerra'''
-        self.juego_6 = JuegoGuerra(random_seed=735)
-        
-        '''juego empate'''
-        self.juego_7 = JuegoGuerra(random_seed=547)        
-        self.juego_8 = JuegoGuerra(random_seed=296)
-    
     def test_resulta_gana_jugador1(self):
-        """compruebo el número de turnos de 3 partidas con
+        """
+        Compruebo el número de turnos de 3 partidas con
         el jugador 1 como ganador
         """
+
+        # jugador 1 gana la partida en el turno 137
+        self.juego_1 = JuegoGuerra(random_seed=314)
+        # jugador 1 gana la partida en el turno 638
+        self.juego_2 = JuegoGuerra(random_seed=59)
+        # jugador 1 gana la partida en el turno 1383
+        self.juego_3 = JuegoGuerra(random_seed=883)
+
         self.juego_1.iniciar_juego()
         self.juego_2.iniciar_juego()
         self.juego_3.iniciar_juego()
@@ -52,9 +40,18 @@ class TestJuegoGuerra(unittest.TestCase):
         
     
     def test_resulta_gana_jugador2(self):
-        """compruebo el número de turnos de 3 partidas con
+        """
+        compruebo el número de turnos de 3 partidas con
         el jugador 2 como ganador
-        """        
+        """
+
+        # jugador 2 gana la partida en el turno 145
+        self.juego_4 = JuegoGuerra(random_seed=167)
+        # jugador 2 gana la partida en el turno 1112
+        self.juego_5 = JuegoGuerra(random_seed=190)
+        # jugador 2 gana la partida en el turno 1373 por Guerra
+        self.juego_6 = JuegoGuerra(random_seed=735)
+
         self.juego_4.iniciar_juego()
         self.juego_5.iniciar_juego()
         self.juego_6.iniciar_juego()
@@ -69,7 +66,14 @@ class TestJuegoGuerra(unittest.TestCase):
         self.assertEqual(self.juego_6.ganador, 'jugador 2')
     
     def test_resulta_empate(self):
-        """compruebo el resultado de 2 partidas con empate"""
+        """
+        compruebo el resultado de 2 partidas con empate
+        """
+
+        # juego empate
+        self.juego_7 = JuegoGuerra(random_seed=547)
+        self.juego_8 = JuegoGuerra(random_seed=296)
+
         self.juego_7.iniciar_juego()
         self.juego_8.iniciar_juego()
         
@@ -77,7 +81,5 @@ class TestJuegoGuerra(unittest.TestCase):
         self.assertTrue(self.juego_8.empate)
     
     
-if __name__=='__main__':
-    
+if __name__ == '__main__':
     unittest.main()
-    
