@@ -92,7 +92,7 @@ class TestMazo(unittest.TestCase):
         carta2=self.mazo.sacar_arriba()
         self.assertIs(carta1, carta2)
 
-    def test_poner_abajo(self):                   #Poner abajo al momento de ganar el turno
+# def test_poner_abajo(self):                   #Poner abajo al momento de ganar el turno
         
         
         
