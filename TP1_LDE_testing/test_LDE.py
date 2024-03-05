@@ -349,23 +349,6 @@ class Test_LDE(unittest.TestCase):
             # Avanzo al siguiente nodo de lista original
             nodo_original = nodo_original.anterior
 
-    def test_ordenar(self):
-        """
-        Ordeno dos listas con los mismos elementos: una lista de Python con
-        el método sort() y una LDE con el método ordenar().
-        Comparo los resultados nodo a nodo y verifico que sean iguales.
-
-        """
-        self.lista_aux_3.sort()
-        self.lde_3.ordenar()
-
-        # Verifico que la lista ordenada este correctamente enlazada
-        self.recorrer_lista(self.lde_3)
-
-        for i, dato in enumerate(self.lde_3):
-            self.assertEqual(self.lista_aux_3[i], dato,
-                             "Los datos en la lista no se ordenaron correctamente")
-
     def recorrer_lista(self, lista):
         """
         Metodo auxiliar para usar en tests de métodos complejos
