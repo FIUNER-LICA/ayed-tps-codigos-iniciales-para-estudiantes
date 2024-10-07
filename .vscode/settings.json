@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": ["${workspaceFolder}"],  // para resolución de importaciones 
+    "terminal.integrated.env.windows": {                   // para variables de entorno de terminal
+        "PYTHONPATH": "${workspaceFolder}",
+        "PATH": "${workspaceFolder};${env:PATH}"
+    }
+}
