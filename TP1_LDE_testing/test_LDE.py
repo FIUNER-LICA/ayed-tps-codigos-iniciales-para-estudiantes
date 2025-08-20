@@ -31,19 +31,44 @@ class Test_LDE(unittest.TestCase):
 
         # self.posicion = random.randint(1, self.n_elementos - 1)  # randint incluye el extremo
 
-    def test_iteracion(self):
+    def recorrer_lista(self, lista):
         """
-        Verificamos que tenga sobrecargado los métodos necesarios para ser
-        iterado en un bucle for.
-        En cada iteración debe devolver el dato siguiente, no el nodo.
+        Metodo auxiliar para usar en tests de métodos complejos
+        de la clase lista doblemente enlazada. Verifica que los nodos de la lista
+        esten bien enlazados entre sí (forward y backward).
         """
 
-        nodo = self.lde_2.cabeza
-        for dato in self.lde_2:
-            self.assertEqual(nodo.dato, dato,
-                             "Los datos arrojados en el for no coinciden con los datos "
-                             "obtenidos por recorrido manual de la LDE desde la cabeza")
+        # Recorro de adelante para atras
+        nodo = lista.cabeza
+        counter = 0
+        elementos = []
+
+        self.assertIsNone(nodo.anterior,
+                          "El elemento anterior a la cabeza de la lista debe ser None")
+
+        while nodo is not None:
+            counter += 1
+            elementos.append(nodo.dato)
             nodo = nodo.siguiente
+
+        self.assertEqual(len(lista), counter,
+                         "Tamaño informado por la lista no coincide con la cantidad de nodos en la misma.")
+
+        # Recorro de atras para adelante
+        nodo = lista.cola
+
+        self.assertIsNone(nodo.siguiente,
+                          "El elemento siguiente a la cola de la lista debe ser None")
+
+        while nodo is not None:
+            counter -= 1
+            self.assertEqual(elementos[counter], nodo.dato,
+                             "Los elementos en la lista recorrida de atras para adelante son diferentes "
+                             "a que si la recorremos de adelante para atrás.")
+            nodo = nodo.anterior
+        
+# ----------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------
 
     def test_agregar_al_inicio(self):
         """
@@ -349,42 +374,6 @@ class Test_LDE(unittest.TestCase):
             # Avanzo al siguiente nodo de lista original
             nodo_original = nodo_original.anterior
 
-    def recorrer_lista(self, lista):
-        """
-        Metodo auxiliar para usar en tests de métodos complejos
-        de la clase lista doblemente enlazada. Verifica que los nodos de la lista
-        esten bien enlazados entre sí (forward y backward).
-        """
-
-        # Recorro de adelante para atras
-        nodo = lista.cabeza
-        counter = 0
-        elementos = []
-
-        self.assertIsNone(nodo.anterior,
-                          "El elemento anterior a la cabeza de la lista debe ser None")
-
-        while nodo is not None:
-            counter += 1
-            elementos.append(nodo.dato)
-            nodo = nodo.siguiente
-
-        self.assertEqual(len(lista), counter,
-                         "Tamaño informado por la lista no coincide con la cantidad de nodos en la misma.")
-
-        # Recorro de atras para adelante
-        nodo = lista.cola
-
-        self.assertIsNone(nodo.siguiente,
-                          "El elemento siguiente a la cola de la lista debe ser None")
-
-        while nodo is not None:
-            counter -= 1
-            self.assertEqual(elementos[counter], nodo.dato,
-                             "Los elementos en la lista recorrida de atras para adelante son diferentes "
-                             "a que si la recorremos de adelante para atrás.")
-            nodo = nodo.anterior
-
     def test_metodo_concatenar(self):
         """
         Verifico que funcione bien la concatenacion de listas mediante el metodo
@@ -449,6 +438,20 @@ class Test_LDE(unittest.TestCase):
                              "No coinciden los nodos de la lista 2 con la lista concatenada")
             nodo_original = nodo_original.siguiente
             nodo_concat = nodo_concat.siguiente
+
+    def test_iteracion(self):
+        """
+        Verificamos que tenga sobrecargado los métodos necesarios para ser
+        iterado en un bucle for.
+        En cada iteración debe devolver el dato siguiente, no el nodo.
+        """
+
+        nodo = self.lde_2.cabeza
+        for dato in self.lde_2:
+            self.assertEqual(nodo.dato, dato,
+                             "Los datos arrojados en el for no coinciden con los datos "
+                             "obtenidos por recorrido manual de la LDE desde la cabeza")
+            nodo = nodo.siguiente
 
 
 if __name__ == "__main__":
