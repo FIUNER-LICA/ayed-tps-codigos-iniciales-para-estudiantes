@@ -5,8 +5,8 @@ Created on Thu Aug 11 09:32:57 2022
 @author: Cátedra de Algoritmos y Estructura de Datos
 """
 
-from mazo import Mazo, DequeEmptyError
-from carta import Carta
+from modules.mazo import Mazo, DequeEmptyError
+from modules.carta import Carta
 import random
 
 N_TURNOS = 10000
