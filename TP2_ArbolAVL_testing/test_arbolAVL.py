@@ -78,9 +78,9 @@ class TestArbolAVL(unittest.TestCase):
             )
 
         # 5. Validación Teórica de la Cota de Altura Máxima
-        # La altura de un árbol AVL de N nodos jamás supera h <= 1.44 * log2(N + 2)
+        # La altura de un árbol AVL de N nodos jamás supera h <= 1.44 * log2(N + 1) - 0.33
         if arbol.tamaño > 0:
-            altura_maxima = math.ceil(1.44 * math.log2(arbol.tamaño + 2))
+            altura_maxima = math.floor(1.44 * math.log2(arbol.tamaño + 1) - 0.33)
             self.assertLessEqual(
                 arbol.altura,
                 altura_maxima,
