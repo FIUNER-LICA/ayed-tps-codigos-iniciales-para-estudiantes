@@ -5,17 +5,17 @@ class Vertice:
 
     # getters y setters para los atributos del grafo (con property)
 
-    def agregarVecino(self,vecino,ponderacion=0):
+    def agregar_conexion(self, vertice, peso=0):
         pass
 
-    def __str__(self):
+    def obtener_conexiones(self):
         pass
 
-    def obtenerConexiones(self):
+    def obtener_peso(self, vertice):
         pass
 
-    def obtenerId(self):
+    def __lt__(self, otro):
         pass
 
-    def obtenerPonderacion(self,vecino):
+    def __repr__(self):
         pass

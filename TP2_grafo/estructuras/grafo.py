@@ -5,19 +5,19 @@ class Grafo:
 
     # getters y setters para los atributos del grafo (con property)
 
-    def agregarVertice(self,clave):
+    def agregar_vertice(self, clave):
         pass
 
-    def obtenerVertice(self,n):
+    def obtener_vertice(self, clave):
         pass
 
-    def __contains__(self,n):
+    def __contains__(self, clave):
         pass
 
-    def agregarArista(self,de,a,costo=0):
+    def agregar_arista(self, clave_vertice_origen, clave_vertice_destino, peso=0):
         pass
 
-    def obtenerVertices(self):
+    def obtener_vertices(self):
         pass
 
     def __iter__(self):
