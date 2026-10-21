@@ -6,7 +6,7 @@ def aplicar_prim(grafo, clave_inicio):
     del árbol, partiendo desde un nodo inicial.
 
     Args:
-        grafo (GrafoDirigido): Instancia de la estructura de datos GrafoDirigido que contiene los vértices y aristas.
+        grafo (Grafo): Instancia de la estructura de datos Grafo que contiene los vértices y aristas.
         clave_inicio (Any): Identificador único o clave del vértice desde el cual comenzará la exploración.
 
     Returns:
@@ -41,7 +41,7 @@ def aplicar_dijkstra(grafo, clave_inicio):
     nodos alcanzables en el grafo.
 
     Args:
-        grafo (GrafoDirigido): Instancia de la estructura de datos GrafoDirigido que contiene los vértices y aristas.
+        grafo (Grafo): Instancia de la estructura de datos Grafo que contiene los vértices y aristas.
         clave_inicio (Any): Identificador único o clave del vértice origen del cual se calcularán las distancias.
 
     Returns:
